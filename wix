@@ -2,11 +2,12 @@
 import wixData from 'wix-data';
 
 $w.onReady(function () {
-    //뒤의 드롭다운 비활성화
+    //처음 시작시 뒤의 드롭다운(2,3,4) 비활성화
     $w("#dropdown2").disable();
     $w("#dropdown3").disable();
     $w("#dropdown4").disable();
 });
+
 //첫번째 드롭다운
 export function dropdown1_click(event) {
     //두번째 활성화
@@ -16,7 +17,7 @@ export function dropdown1_click(event) {
 }
 //두번째 드롭다운
 export function dropdown2_click(event) {
-    if ($w("#dropdown1").value != "RESET_ALL" && $w("#dropdown1").value != "") {
+    if ($w("#dropdown1").value != "RESET_ALL" && $w("#dropdown1").value != "") { //첫번째 드롭다운 값이 있을 경우 
         $w("#dropdown2").enable();
         let dropdown1Value = $w("#dropdown1").value;
         console.log(dropdown1Value);
@@ -163,4 +164,20 @@ export function button1_click(event) {
         });
     }
 
+	//이미지 변경
+	//쿼리문 방 이름이 첫번째 드롬 박스에 있을 경우
+    let querymap1 = wixData.query("image").eq("title", dropdown1Value);
+	
+
+	try{
+		querymap1.find().then((result) => {
+			console.log(result.items);
+			$w('#image1').src = result.items[0].url;
+		});
+	}
+	catch(error){
+		console.log(error);
+	}
+	
+	
 }
